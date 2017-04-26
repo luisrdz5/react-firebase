@@ -33,6 +33,13 @@ class App extends Component {
       .then(result => console.log(`${result.user.email} ha iniciado sesión`))
       .catch(error => console.log(`Error: ${error.code}: ${error.message}`));
   }
+  handleAuthFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();  
+
+    firebase.auth().signInWithPopup(provider)
+      .then(result => console.log(`${result.user.email} ha iniciado sesión`))
+      .catch(error => console.log(`Error: ${error.code}: ${error.message}`));
+  }
   handleLogout () {
     firebase.auth().signOut()
     .then(result => console.log(`${result.user.email} ha salido`))
@@ -72,7 +79,7 @@ class App extends Component {
           {
             this.state.pictures.map(picture => (
               <div>
-                <img src={picture.image} alt=''/>
+                <img src={picture.image} alt='' width="300"/>
                 <br/>
                 <img src={picture.photoURL} alt={picture.displayName} width="48"/>
                 <br/>
@@ -85,14 +92,21 @@ class App extends Component {
     }else {
       //Si el usuario no esta logueado 
       return(
-        <button onClick={this.handleAuth}> Login con Google  </button>
+      <div>
+        <div className="contenedor">
+          <button onClick={this.handleAuth} className="waves-effect waves-light btn indigo"> Login con <i className="fa fa-google fa-2x"></i>oogle  </button>
+        </div>
+        <div className="contenedor">      
+          <button onClick={this.handleAuthFacebook} className="waves-effect waves-light btn indigo"> Login con <i className="fa fa-facebook-official fa-2x"></i>acebook  </button>              
+        </div>
+      </div>
         );
     }
   }
   render() {
     return (
       <div className="App">
-        <div className="App-header">
+        <div className="App-header indigo">
           <h2>BugGram</h2>
         </div>
         <p className="App-intro">
